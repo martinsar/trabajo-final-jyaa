@@ -3,6 +3,7 @@ package modelo;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class Comentario {
 	private Recorrido recorrido;
 	
 	
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.REFRESH })
 	    @JoinColumn(name="usuarioId")
 	private Usuario usuario;
 	

@@ -9,4 +9,17 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+   <!-- REsT configuration >
+  <servlet>
+  	<servlet-name>Jersey Web Application</servlet-name>
+  	<servlet-class>
+  		com.sun.ws.rest.spi.container.servlet.ServletContainer
+  	</servlet-class>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>Jersey Web Application</servlet-name>
+  	<url-pattern>/rest/*</url-pattern>
+  </servlet-mapping-->
 </web-app>

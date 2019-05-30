@@ -26,6 +26,34 @@ import javax.persistence.Table;
 @Table(name="usuario")
 public class Usuario {
 	
+	/**
+	 * @param userName
+	 * @param password
+	 * @param nombre
+	 * @param apellido
+	 * @param domicilio
+	 * @param telelefono
+	 * @param email
+	 * @param empresa_organizacion
+	 * @param personaContacto
+	 * @param comentarios
+	 * @param horariosContacto
+	 */
+	public Usuario(String userName, String password, String nombre, String apellido, String domicilio,
+			List<String> telelefono, String email, String empresa_organizacion, String personaContacto,
+	List<String> horariosContacto) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.domicilio = domicilio;
+		this.telelefono = telelefono;
+		this.email = email;
+		this.empresa_organizacion = empresa_organizacion;
+		this.personaContacto = personaContacto;
+		this.horariosContacto = horariosContacto;
+	}
 	public Usuario() {
 		
 	}
@@ -75,7 +103,7 @@ public class Usuario {
 	private List<String> horariosContacto;
 	
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.REFRESH })
 	private List<Usuario> usuarios;
 	
 	@ManyToOne(optional=true)

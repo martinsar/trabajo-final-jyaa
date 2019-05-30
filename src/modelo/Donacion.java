@@ -3,6 +3,7 @@ package modelo;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -17,6 +19,62 @@ import javax.persistence.Table;
 @Table(name="donacion")
 public class Donacion {
 	
+	/**
+	 * @param sucursal
+	 * @param direccionRetiro
+	 * @param horaDeRetiro
+	 * @param fechaDisponibilidad
+	 * @param longitud
+	 * @param latitud
+	 * @param retirado
+	 * @param recorrido
+	 * @param retiro
+	 * @param nroRemito
+	 */
+	public Donacion() {
+		
+	}
+	public Donacion(String sucursal, String direccionRetiro, Date horaDeRetiro, Date fechaDisponibilidad,
+			Integer longitud, Integer latitud, boolean retirado, Recorrido recorrido, Retiro retiro,
+			Integer nroRemito) {
+		super();
+		this.sucursal = sucursal;
+		this.direccionRetiro = direccionRetiro;
+		this.horaDeRetiro = horaDeRetiro;
+		this.fechaDisponibilidad = fechaDisponibilidad;
+		this.longitud = longitud;
+		this.latitud = latitud;
+		this.retirado = retirado;
+		this.recorrido = recorrido;
+		this.retiro = retiro;
+		this.nroRemito = nroRemito;
+	}
+
+	/**
+	 * @param sucursal
+	 * @param direccionRetiro
+	 * @param horaDeRetiro
+	 * @param fechaDisponibilidad
+	 * @param longitud
+	 * @param latitud
+	 * @param retirado
+	 * @param retiro
+	 * @param nroRemito
+	 */
+	public Donacion(String sucursal, String direccionRetiro, Date horaDeRetiro, Date fechaDisponibilidad,
+			Integer longitud, Integer latitud, boolean retirado, Retiro retiro, Integer nroRemito) {
+		super();
+		this.sucursal = sucursal;
+		this.direccionRetiro = direccionRetiro;
+		this.horaDeRetiro = horaDeRetiro;
+		this.fechaDisponibilidad = fechaDisponibilidad;
+		this.longitud = longitud;
+		this.latitud = latitud;
+		this.retirado = retirado;
+		this.retiro = retiro;
+		this.nroRemito = nroRemito;
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long donacionId;
@@ -48,9 +106,21 @@ public class Donacion {
 	private Recorrido recorrido;
 //	private List<Producto> productos;
 	
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.REFRESH })
     @JoinColumn(name="retiroId")
 	private Retiro retiro;
+	
+	
+	public List<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+	}
+
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<Producto> productos;
 
 	@Column(nullable=true)
 	private Integer nroRemito;

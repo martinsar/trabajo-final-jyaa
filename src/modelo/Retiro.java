@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,18 +16,34 @@ import javax.persistence.Table;
 @Table(name="retiro")
 public class Retiro {
 	
+	/**
+	 * @param fechaHoraRetiro
+	 * @param donacion
+	 * @param recorrido
+	 */
+	public Retiro() {
+		
+	}
+	public Retiro(Date fechaHoraRetiro, Donacion donacion, Recorrido recorrido) {
+		super();
+		this.fechaHoraRetiro = fechaHoraRetiro;
+		this.donacion = donacion;
+		this.recorrido = recorrido;
+	}
+	
+
 	@Id
 	@GeneratedValue
 	private Long  retiroId;
 	
-	@Column(nullable=false)
+	@Column(nullable=true)
 	private Date fechaHoraRetiro;
 	
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.REFRESH })
     @JoinColumn(name="donacionId")
 	private Donacion donacion;
 	
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.REFRESH })
     @JoinColumn(name="recorridoId")
 	private Recorrido recorrido;
 	

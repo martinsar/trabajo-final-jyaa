@@ -40,6 +40,8 @@ public class Producto {
 	@ManyToOne
     @JoinColumn(name="donacionId")
 	private Donacion donacion;
+	
+	
 	public String getTipo() {
 		return tipo;
 	}

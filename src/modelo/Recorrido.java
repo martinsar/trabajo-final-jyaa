@@ -23,20 +23,20 @@ public class Recorrido {
 	//@Column(name = "recorrido_id")
 	private Long recorridoId;
 	
-	@Column(nullable=false)
+	@Column(nullable=true)
 	private Date fechaRetiro;
 	
 	
 	 @ManyToOne
-	    @JoinColumn(name="usuarioId")
+	@JoinColumn(name="usuarioId")
 	private Usuario usuario;
 	 
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.REFRESH })
 	private List<Comentario> comentarios; 
  
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.REFRESH })
 	private List<Retiro> retiros;
 	
 	

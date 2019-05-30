@@ -25,7 +25,6 @@ mapped to database tables. Database driver, location, userid and pw
 <class>modelo.Usuario</class>
 <class>modelo.Comentario</class>
 <class>modelo.Recorrido</class>
-<class>modelo.Student</class>
 <class>modelo.Donacion</class>
 <class>modelo.Rol</class>
 <class>modelo.Retiro</class>

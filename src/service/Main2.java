@@ -25,7 +25,7 @@ import modelo.Recorrido;
 import modelo.Retiro;
 import modelo.Rol;
 import modelo.Usuario;
-public class Main {
+public class Main2 {
 	  // Create an EntityManagerFactory when you start the application.
     private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence
             .createEntityManagerFactory("bancoAlimentario");
@@ -45,10 +45,10 @@ public class Main {
         	
         	
         	Usuario usuarioDonante= agregarUsuario(rolDonante);
-        	Usuario usuarioBanco =  	agregarUsuarioBanco();
-        	//Usuario usuarioBanco= agregarUsuario(rolBanco);
-        	//Usuario usuarioAdmin= agregarUsuario(rolAdmin);
-        	Usuario usuarioAdmin = agregarUsuarioAdmin();
+        	Usuario usuarioBanco= agregarUsuario(rolBanco);
+        	Usuario usuarioAdmin= agregarUsuario(rolAdmin);
+        	
+        	
         	Donacion donacion = agregarDonacion(usuarioDonante);
         	agregarDonacionAProducto(donacion) ;
         	
@@ -90,7 +90,7 @@ public class Main {
 
     	Rol rol1 = new Rol();
     	rol1.setNombreRol(nombreRol);
-    	System.out.println("Ingreso rol: "+"Nombre Rol: "+ rol1.getNombreRol()  +" Id: "+rol1.getId()); 
+    	
     	
     	return rdao.persistir(rol1);
     }
@@ -101,34 +101,23 @@ public class Main {
 	 	
 		
 		/* *************************************************************************************** */
-	 List<String> telefonos = new ArrayList<String>();
-	 telefonos.add("4515555");
-	 telefonos.add("45156666");
-	 telefonos.add("451553333");
+	 List<String> telefono = new ArrayList<String>();
 	 List<String> horariosContacto = new ArrayList<String>();
 		 
 		// creo el usuario donante
-	 Usuario usuarioDonante = new Usuario("usuarioDonante", "passwordDonante", "nombreDonante", "apellidoDonante", "domicilioDonante",
-		               telefonos
-		               , "emailDonante", "empresa_organizacionDonante", "personaContactoDonante", horariosContacto);
+	 Usuario usuarioDonante = new Usuario("usuarioDonante", "passwordDonante", "nombre0", "apellido0", "domicilio0",
+		               telefono, "email0", "empresa_organizacion0", "personaContacto0", horariosContacto);
 	 	
 
-		System.out.println("----------------------------USUARIO DONANTE-----------------------------------------------");
-
-		System.out.println("----USUARIO COMUN-----USER NAME: "+ usuarioDonante.getUserName()+ usuarioDonante.getPassword() + "APELLIDO: "+ usuarioDonante.getApellido() + "NOMBRE: "+usuarioDonante.getNombre() + "DOMICILIO: " + usuarioDonante.getDomicilio()+" EMAIL: "+ usuarioDonante.getEmail()+"EMPRESA/ORGANIZACION: " +usuarioDonante.getEmpresa_organizacion()+" PERSONA CONTACTO: "+ usuarioDonante.getPersonaContacto()+" Rol del usuario: "+ usuarioDonante.getRol()+  "lista de usuarios: "+ usuarioDonante.getUsuarios());
-
+	 
 	 userDAO.persistir(usuarioDonante);
 	 
 	 usuarioDonante.setRol(rolDonante); 
-	System.out.println("----------------------------AGRERO ROL AL USUARIO DONANTE-----------------------------------------------");
-
-	System.out.println("----USUARIO COMUN-----USER NAME: "+ usuarioDonante.getUserName()+ usuarioDonante.getPassword() + "APELLIDO: "+ usuarioDonante.getApellido() + "NOMBRE: "+usuarioDonante.getNombre() + "DOMICILIO: " + usuarioDonante.getDomicilio()+" EMAIL: "+ usuarioDonante.getEmail()+"EMPRESA/ORGANIZACION: " +usuarioDonante.getEmpresa_organizacion()+" PERSONA CONTACTO: "+ usuarioDonante.getPersonaContacto()+" Rol del usuario: "+ usuarioDonante.getRol()+  "lista de usuarios: "+ usuarioDonante.getUsuarios());
-
 	 return userDAO.actualizar(usuarioDonante);
      	 
  }
  
- public static Usuario agregarUsuarioAdmin() {
+ public static void agregarUsuarioAdmin() {
 	 
 	UsuarioDAO userDAO = new UsuarioDAO();
 	RolDAO rdao= new RolDAO();
@@ -144,8 +133,7 @@ public class Main {
 	               telefono, "email0", "empresa_organizacion0", "personaContacto0", horariosContacto);
  	
  	 Rol rol1 = new Rol();
- 	
- 	 rol1.setNombreRol("admin");
+ 	rol1.setNombreRol("admin");
  	rdao.persistir(rol1);
  	
  	/* *************************************************************************************** */
@@ -163,113 +151,24 @@ public class Main {
    
 		
 	
-        
-	System.out.println("----------------------------USUARIO COMUN-----------------------------------------------");
-
-	System.out.println("----USUARIO COMUN-----USER NAME: "+ usuarioAcrear.getUserName()+ usuarioAcrear.getPassword() + "APELLIDO: "+ usuarioAcrear.getApellido() + "NOMBRE: "+usuarioAcrear.getNombre() + "DOMICILIO: " + usuarioAcrear.getDomicilio()+" EMAIL: "+ usuarioAcrear.getEmail()+"EMPRESA/ORGANIZACION: " +usuarioAcrear.getEmpresa_organizacion()+" PERSONA CONTACTO: "+ usuarioAcrear.getPersonaContacto()+ "Rol Usuario: "+ usuarioAdmin.getRol()+  "lista de usuarios: "+ usuarioAdmin.getUsuarios());
- 	
+     
+    
+    	
     Usuario usuarioCreado= userDAO.persistir(usuarioAcrear);
     usuarios.add( usuarioCreado);    
     		
 		
-	
- 	System.out.println("----------------------------USUARIO ADMINISTRADOR-----------------------------------------------");
-	System.out.println("---USUARIO ADMIN-----USER NAME: "+ usuarioAdmin.getUserName()+ usuarioAdmin.getPassword() + "APELLIDO: "+ usuarioAdmin.getApellido() + "NOMBRE: "+usuarioAdmin.getNombre() + "DOMICILIO: " + usuarioAdmin.getDomicilio()+" EMAIL: "+ usuarioAdmin.getEmail()+"EMPRESA/ORGANIZACION: " +usuarioAdmin.getEmpresa_organizacion()+" PERSONA CONTACTO: "+ usuarioAdmin.getPersonaContacto()+ "Rol Usuario: "+ usuarioAdmin.getRol()+  "lista de usuarios: "+ usuarioAdmin.getUsuarios());
-	 
-	userDAO.persistir(usuarioAdmin);
-	System.out.println("----------------------------LE AGREGO USUARIOS AL USUARIO ADMINISTRADOR-----------------------------------------------");
-	System.out.println("---USUARIO ADMIN-----USER NAME: "+ usuarioAdmin.getUserName()+ usuarioAdmin.getPassword() + "APELLIDO: "+ usuarioAdmin.getApellido() + "NOMBRE: "+usuarioAdmin.getNombre() + "DOMICILIO: " + usuarioAdmin.getDomicilio()+" EMAIL: "+ usuarioAdmin.getEmail()+"EMPRESA/ORGANIZACION: " +usuarioAdmin.getEmpresa_organizacion()+" PERSONA CONTACTO: "+ usuarioAdmin.getPersonaContacto()+ "Rol Usuario: "+ usuarioAdmin.getRol()+  "lista de usuarios: "+ usuarioAdmin.getUsuarios());
-	 
-	
 	usuarioAdmin.setUsuarios(usuarios);
-	userDAO.actualizar(usuarioAdmin);
+ 	
+	
+	userDAO.persistir(usuarioAdmin);
+ 	
+ 	
 	usuarioAdmin.setRol(rol1); 
-	System.out.println("----------------------------LE AGREGO EL ROL AL USUARIO ADMINISTRADOR-----------------------------------------------");
-	System.out.println("---USUARIO ADMIN-----USER NAME: "+ usuarioAdmin.getUserName()+ usuarioAdmin.getPassword() + "APELLIDO: "+ usuarioAdmin.getApellido() + "NOMBRE: "+usuarioAdmin.getNombre() + "DOMICILIO: " + usuarioAdmin.getDomicilio()+" EMAIL: "+ usuarioAdmin.getEmail()+"EMPRESA/ORGANIZACION: " +usuarioAdmin.getEmpresa_organizacion()+" PERSONA CONTACTO: "+ usuarioAdmin.getPersonaContacto()+ "Rol Usuario: "+ usuarioAdmin.getRol()+  "lista de usuarios: "+ usuarioAdmin.getUsuarios());
-	
-	
-	
-	return userDAO.actualizar(usuarioAdmin);
+	userDAO.actualizar(usuarioAdmin);
 	
 	 
  }
- public static Usuario agregarUsuarioBanco() {
-	 
-		UsuarioDAO userDAO = new UsuarioDAO();
-		RolDAO rdao= new RolDAO();
-	 	
-		
-		/* *************************************************************************************** */
-	 	List<String> telefono = new ArrayList<String>();
-	 	List<String> horariosContacto = new ArrayList<String>();
-		 
-		// creo el usuario admin
-	 	List<Usuario> usuarios = new ArrayList<Usuario>();
-	 	Usuario usuarioBanco = new Usuario("usuarioBanco", "passwordBanco", "nombreBanco", "apellidoBanco", "domicilioBanco",
-		               telefono, "emailBanco", "empresa_organizacionBanco", "personaContactoBanco", horariosContacto);
-	 	
-	 	 Rol rol1 = new Rol();
-	 	rol1.setNombreRol("banco");
-	 	rdao.persistir(rol1);
-	 	
-	 	/* *************************************************************************************** */
-	 	
-
-	    // creo usuarioBanco	    	
-	
-	 	Usuario usuarioAcrear = new Usuario("userComun", "password", "nombre", "apellido", "domicilio",
-	    			               telefono, "email", "empresa_organizacion", "personaContacto",horariosContacto);
-	     
-	    Rol rol2 = new Rol();
-	    rol1.setNombreRol("usuarioBanco"); 
-	 	rdao.persistir(rol2);
-	    
-	    
-	    Usuario usuarioCreado= userDAO.persistir(usuarioAcrear);
-	    usuarios.add( usuarioCreado);    
-	    
-	    
-	    // creo usuario admin2
-	    Usuario usuarioAdmin2 = new Usuario("userAdmin2", "password2", "nombre", "apellido", "domicilio",
-	               telefono, "email", "empresa_organizacion", "personaContacto",horariosContacto);
-	 	System.out.println("----------------------------USUARIO ADMINISTRADOR2-----------------------------------------------");
-		System.out.println("---USUARIO ADMIN2-----USER NAME: "+ usuarioAdmin2.getUserName()+ usuarioAdmin2.getPassword() + "APELLIDO: "+ usuarioAdmin2.getApellido() + "NOMBRE: "+usuarioAdmin2.getNombre() + "DOMICILIO: " + usuarioAdmin2.getDomicilio()+" EMAIL: "+ usuarioAdmin2.getEmail()+"EMPRESA/ORGANIZACION: " +usuarioAdmin2.getEmpresa_organizacion()+" PERSONA CONTACTO: "+ usuarioAdmin2.getPersonaContacto()+ "Rol Usuario: "+ usuarioBanco.getRol()+  "lista de usuarios: "+ usuarioBanco.getUsuarios());
-		userDAO.persistir(usuarioAdmin2);
-		usuarios.add( usuarioAdmin2);    
-			
-		usuarioBanco.setUsuarios(usuarios);
-		
-		
-	     /* *************************************************************************************** */ 
-	   
-			
-	 	System.out.println("----------------------------AGREGO USUARIO BANCO-----------------------------------------------");
-		System.out.println("---USUARIO ADMIN-----USER NAME: "+ usuarioBanco.getUserName()+ usuarioBanco.getPassword() + "APELLIDO: "+ usuarioBanco.getApellido() + "NOMBRE: "+usuarioBanco.getNombre() + "DOMICILIO: " + usuarioBanco.getDomicilio()+" EMAIL: "+ usuarioBanco.getEmail()+"EMPRESA/ORGANIZACION: " +usuarioBanco.getEmpresa_organizacion()+" PERSONA CONTACTO: "+ usuarioBanco.getPersonaContacto()+ "Rol Usuario: "+ usuarioBanco.getRol()+  "lista de usuarios: "+ usuarioBanco.getUsuarios());
-		 	
-  		userDAO.persistir(usuarioBanco);
-	 	
-	 	
-  		usuarioBanco.setRol(rol1); 
-  		System.out.println("----------------------------LE AGREGO EL ROL AL USUARIO BANCO-----------------------------------------------");
-		System.out.println("---USUARIO ADMIN-----USER NAME: "+ usuarioBanco.getUserName()+ usuarioBanco.getPassword() + "APELLIDO: "+ usuarioBanco.getApellido() + "NOMBRE: "+usuarioBanco.getNombre() + "DOMICILIO: " + usuarioBanco.getDomicilio()+" EMAIL: "+ usuarioBanco.getEmail()+"EMPRESA/ORGANIZACION: " +usuarioBanco.getEmpresa_organizacion()+" PERSONA CONTACTO: "+ usuarioBanco.getPersonaContacto()+ "Rol Usuario: "+ usuarioBanco.getRol()+  "lista de usuarios: "+ usuarioBanco.getUsuarios());
-		
-		System.out.println("----------------------------CREO USUARIO SIN RELACIONES PARA DESPUES BORRAR---------------------------------");
-		Usuario usuarioBorrar = new Usuario("userBorrar", "passwordBorrar", "nombreBorrar", "apellidoBorrar", "domicilioBorrar",
-	               telefono, "emailBorrar", "empresa_organizacionBorrar", "personaContactoBorrar",horariosContacto);
-
-		userDAO.persistir(usuarioBorrar);
-		
-		
-		if (userDAO.existe(usuarioBanco.getUsuarioId())) {
-			System.out.println("existe el usuario: "+ usuarioBanco.getUserName());
-			userDAO.borrar(usuarioBorrar);
-		}else  {
-			System.out.println("No existe el usuario: "+ usuarioBanco.getUserName());
-		}
-  		
-		return userDAO.actualizar(usuarioBanco);
-		 
-	 }
  
 
  public static Donacion agregarDonacion(Usuario usuarioDonante) {
