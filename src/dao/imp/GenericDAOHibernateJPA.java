@@ -6,8 +6,9 @@ import javax.transaction.Transaction;
 
 import dao.EMF;
 import dao.GenericDAO;
+import modelo.Usuario;
 
-public class GenericDAOHibernateJPA<T> implements GenericDAO<T> {
+public class GenericDAOHibernateJPA<T> implements GenericDAO<T>{
 	
 	/*EntityManager entityManager;
 
@@ -21,7 +22,6 @@ public class GenericDAOHibernateJPA<T> implements GenericDAO<T> {
 	
 	protected Class<T> persistentClass;
 	
-	@Override
 	public T persistir(T entity) {
 		// TODO Auto-generated method stub
 		EntityManager em = EMF.getInstance().getEm();
@@ -34,7 +34,6 @@ public class GenericDAOHibernateJPA<T> implements GenericDAO<T> {
 	
 	
 
-	@Override
 	public T actualizar(T entity) {
 		// TODO Auto-generated method stub
 		EMF.getEMF().createEntityManager().merge(entity);
@@ -43,7 +42,6 @@ public class GenericDAOHibernateJPA<T> implements GenericDAO<T> {
 
 	
 	
-	@Override
 	public void borrar(T entity) {
 		try {
 			EntityManager em = EMF.getInstance().getEm();
@@ -59,7 +57,6 @@ public class GenericDAOHibernateJPA<T> implements GenericDAO<T> {
 	}
 
 
-	@Override
 	public boolean existe(Serializable id) {
 		
 			
@@ -69,29 +66,34 @@ public class GenericDAOHibernateJPA<T> implements GenericDAO<T> {
 		return entity != null;
 	}
 	
+	@Override
 	@SuppressWarnings("unchecked")
-	private T getPersistentClass() {
-		return (T) persistentClass;
+	public Class<T> getPersistentClass() {
+		return (Class<T>) persistentClass;
 	}
 	
-	@Override
+	@SuppressWarnings("unchecked")
 	public T recuperar(Serializable id) {
-		@SuppressWarnings("unchecked")
+		
+		
+		System.out.println("this.getClass() " + this.getClass().getClassLoader());
+		System.out.println("this.getClass() " + this.getClass().getName());
+	
+		System.out.println("this.getPersistentClass()" + this.getPersistentClass());
+	
+		
 		EntityManager em = EMF.getInstance().getEm();
-		
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		
-		T entity = em.find((Class<T>) this.getPersistentClass(), id);
-		
-		tx.commit();
-		return entity;
+		T entity = (T) em.find((Class<T>) this.getPersistentClass(), id);
+	        if (entity == null) {
+	            throw new EntityNotFoundException("Can't find Artist for ID "
+	                + id);
+	        }
+	        return entity;
 
 	}
 
 	
 
-	@Override
 	public T persistirLibre(T entity) {
 		// TODO Auto-generated method stub
 		return null;

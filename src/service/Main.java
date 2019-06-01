@@ -260,7 +260,7 @@ public class Main {
 		userDAO.persistir(usuarioBorrar);
 		
 		
-		if (userDAO.existe(usuarioBanco.getUsuarioId())) {
+		if (userDAO.existe(usuarioBorrar.getUsuarioId())) {
 			System.out.println("existe el usuario: "+ usuarioBanco.getUserName());
 			userDAO.borrar(usuarioBorrar);
 		}else  {

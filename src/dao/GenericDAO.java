@@ -12,6 +12,7 @@ public interface GenericDAO<T> {
 	public T persistir(T entity);
 	public T persistirLibre(T entity);
 	public T recuperar(Serializable id);
+	public Class<T> getPersistentClass();
 	
 
 }
