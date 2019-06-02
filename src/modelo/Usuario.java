@@ -225,6 +225,11 @@ public class Usuario {
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
+	
+	public String toString() {
+		String str = "Apellido: "+this.apellido+" Nombre: "+this.nombre+" Nombre de usuario: "+this.userName+ " Contraseña: "+this.password+" Domicilio: "+this.domicilio+" Telefono: "+this.telelefono+" Correo: "+this.email+" Empre/Organización: "+this.empresa_organizacion+" Persona de contacto:  "+this.personaContacto+" Comentarios: "+this.comentarios+" Horario de contacto: "+this.horariosContacto; 
+		return str;
+	}
 
 
 
