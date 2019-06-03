@@ -1,4 +1,7 @@
 package service;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -123,7 +126,6 @@ public class Main {
 	 usuarioDonante.setRol(rolDonante); 
 	System.out.println("----------------------------AGRERO ROL AL USUARIO DONANTE-----------------------------------------------");
 
-	System.out.println("----USUARIO COMUN-----USER NAME: "+ usuarioDonante.getUserName()+ usuarioDonante.getPassword() + "APELLIDO: "+ usuarioDonante.getApellido() + "NOMBRE: "+usuarioDonante.getNombre() + "DOMICILIO: " + usuarioDonante.getDomicilio()+" EMAIL: "+ usuarioDonante.getEmail()+"EMPRESA/ORGANIZACION: " +usuarioDonante.getEmpresa_organizacion()+" PERSONA CONTACTO: "+ usuarioDonante.getPersonaContacto()+" Rol del usuario: "+ usuarioDonante.getRol()+  "lista de usuarios: "+ usuarioDonante.getUsuarios());
 	System.out.println("----USUARIO COMUN-----"+ usuarioDonante.toString());
 	 return userDAO.actualizar(usuarioDonante);
      	 
@@ -157,7 +159,7 @@ public class Main {
     			               telefono, "email", "empresa_organizacion", "personaContacto",horariosContacto);
      
     Rol rol2 = new Rol();
-    rol1.setNombreRol("usuarioBanco"); 
+    rol2.setNombreRol("usuarioBanco"); 
  	rdao.persistir(rol2);
      
      /* *************************************************************************************** */ 
@@ -216,9 +218,9 @@ public class Main {
 	 	/* *************************************************************************************** */
 	 	
 
-	    // creo usuarioBanco	    	
+	    // creo usuarioComun	    	
 	
-	 	Usuario usuarioAcrear = new Usuario("userComun", "password", "nombre", "apellido", "domicilio",
+	 	Usuario usuarioComun = new Usuario("userComun", "password", "nombre", "apellido", "domicilio",
 	    			               telefono, "email", "empresa_organizacion", "personaContacto",horariosContacto);
 	     
 	    Rol rol2 = new Rol();
@@ -226,7 +228,7 @@ public class Main {
 	 	rdao.persistir(rol2);
 	    
 	    
-	    Usuario usuarioCreado= userDAO.persistir(usuarioAcrear);
+	    Usuario usuarioCreado= userDAO.persistir(usuarioComun);
 	    usuarios.add( usuarioCreado);    
 	    
 	    
@@ -240,14 +242,13 @@ public class Main {
 		usuarios.add( usuarioAdmin2);    
 			
 		usuarioBanco.setUsuarios(usuarios);
-		
+		userDAO.persistir(usuarioBanco);
 		
 	     /* *************************************************************************************** */ 
 	   
 			
-	 	System.out.println("----------------------------AGREGO USUARIO BANCO-----------------------------------------------");
-		//System.out.println("---USUARIO ADMIN-----USER NAME: "+ usuarioBanco.getUserName()+ usuarioBanco.getPassword() + "APELLIDO: "+ usuarioBanco.getApellido() + "NOMBRE: "+usuarioBanco.getNombre() + "DOMICILIO: " + usuarioBanco.getDomicilio()+" EMAIL: "+ usuarioBanco.getEmail()+"EMPRESA/ORGANIZACION: " +usuarioBanco.getEmpresa_organizacion()+" PERSONA CONTACTO: "+ usuarioBanco.getPersonaContacto()+ "Rol Usuario: "+ usuarioBanco.getRol()+  "lista de usuarios: "+ usuarioBanco.getUsuarios());
-	 	System.out.println("---USUARIO ADMIN-----USER NAME: "+ usuarioBanco.toString());
+	 	System.out.println("----------------------------AGREGO AL USUARIO BANCO LOS USUARIOS-----------------------------------------------");
+	 	System.out.println("---USUARIO Banco-----USER NAME: "+ usuarioBanco.toString());
   		userDAO.persistir(usuarioBanco);
 	 	
   		
@@ -294,7 +295,7 @@ public class Main {
 	 }
  
 
- public static Donacion agregarDonacion(Usuario usuarioDonante) {
+ public static Donacion agregarDonacion(Usuario usuarioDonante) throws ParseException {
 	DonacionDAO donacionDAO = new DonacionDAO();
 	UsuarioDAO usuarioDAO = new UsuarioDAO();
 	
@@ -319,6 +320,46 @@ public class Main {
 	recorrido.setFechaRetiro(fechaHorarioRetiro);
 	recorrido.setUsuario(usuarioDonante);
 	recorridoDAO.persistir(recorrido);
+	
+	/*---------------AGREGO RECORRIDO QUE POSTERIORMENTE LO VOY A ELIMINAR -----------------------------------  */
+	Recorrido recorridoEliminar = new Recorrido();
+	DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	Date dateRecorridoEliminar1 = format.parse("2018-06-9");
+	Date dateRecorridoEliminar2 = format.parse("2018-06-10");
+
+	recorridoEliminar.setFechaRetiro(dateRecorridoEliminar1);
+	
+	recorridoDAO.persistirLibre(recorridoEliminar);
+	
+	Retiro retiroBorrar = new Retiro();
+	retiroBorrar.setFechaHoraRetiro(dateRecorridoEliminar1);
+	retiroBorrar.setRecorrido(recorridoEliminar);
+	
+	RetiroDAO retiroDAO = new RetiroDAO();
+	retiroDAO.persistir(retiroBorrar);
+	
+	Donacion donacionBorrar = new Donacion();
+	donacionBorrar.setDireccionRetiro("calle 69 dadada");
+	donacionBorrar.setFechaDisponibilidad(dateRecorridoEliminar1);
+	donacionBorrar.setHoraDeRetiro(dateRecorridoEliminar2);
+	donacionBorrar.setLatitud(99);
+	donacionBorrar.setNroRemito(12);
+	donacionBorrar.setSucursal("sucusar Sur");
+	donacionBorrar.setRecorrido(recorridoEliminar);
+	
+	donacionDAO.persistir(donacionBorrar);
+	
+	List<Retiro> retirosBorrar = new ArrayList<Retiro>();
+	retirosBorrar.add(retiroBorrar);
+	recorridoEliminar.setRetiros(retirosBorrar);
+	recorridoDAO.actualizar(recorridoEliminar);
+    // CAMBIO LA FECHA DEL RECORRIDO 
+	
+	Date cambioFechaRecorridoEliminar = format.parse("2018-06-06");
+	recorridoEliminar.setFechaRetiro(cambioFechaRecorridoEliminar);
+	recorridoDAO.actualizar(recorridoEliminar);
+	
+	/*---------------FIN PRUEBA TEST ELIMINAR RECORRIDO ---------------------------------------- -------------   */
 	Recorrido recorrido2 = agregarRetiroARecorrido(recorrido,donacion); 
 	
 	
