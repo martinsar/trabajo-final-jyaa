@@ -101,7 +101,7 @@ public class Donacion {
 	private boolean retirado;
 	
 	
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.REFRESH })
     @JoinColumn(name="recorridoId")
 	private Recorrido recorrido;
 //	private List<Producto> productos;
